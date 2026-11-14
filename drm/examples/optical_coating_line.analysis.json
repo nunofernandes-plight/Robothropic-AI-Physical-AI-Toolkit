@@ -1,0 +1,29 @@
+Read 15228 characters. It starts with: '{"analyses":[{"stage_id":1,"intervention":{"primary":"perception","secondary":["communication"],"suitability":4,"rationale":"Camera-based defect detection for scratches, chips and contamination is well-defined and checkable. The operator keeps the accept/reject judgment and the AI drafts the log ent'
+
+VALID: schema, stage coverage and constraint checks passed.
+
+Analysis of: Anti-reflective coating of optical lenses, batch vacuum deposition line
+Status: PROVISIONAL (the process model is not yet approved; see its open ambiguities)
+
+ id  stage                                 AI role        fit effort sev  reg  human_in_loop   layer  conf
+  1  Incoming inspection                   perception      4      3   3    2  review_after    fast   medium
+  2  Ultrasonic cleaning                   reasoning       3      3   3    2  approve_before  slow   medium
+  3  Drying and fixturing                  perception      3      3   3    3  review_after    slow   medium
+  4  Recipe selection                      reasoning       4      2   4    3  approve_before  slow   medium
+  5  Chamber loading and pump-down         perception      3      3   3    2  review_after    fast   low
+  6  Deposition run                        perception      3      4   4    3  approve_before  slow   low
+  7  Venting and unloading                 none            1      1   3    1  human_only      human_only  medium
+  8  Optical QC                            reasoning       4      2   4    3  approve_before  slow   low
+  9  Cosmetic inspection                   perception      4      3   4    2  approve_before  slow   medium
+ 10  Disposition and records               reasoning       3      3   4    3  approve_before  slow   low
+
+Ranking, best first candidate to start with (deterministic, from scoring.py; weights uncalibrated):
+    1.0  stage 1: Incoming inspection
+    1.0  stage 4: Recipe selection
+    0.0  stage 2: Ultrasonic cleaning
+    0.0  stage 3: Drying and fixturing
+    0.0  stage 5: Chamber loading and pump-down
+    0.0  stage 8: Optical QC
+   -0.5  stage 9: Cosmetic inspection
+   -1.5  stage 10: Disposition and records
+   -2.0  stage 6: Deposition run
