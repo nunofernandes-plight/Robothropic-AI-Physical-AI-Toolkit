@@ -1,5 +1,5 @@
 """Stage 2 output: one StageAnalysis per stage, across the three axes."""
-from pydantic import model_validator
+from pydantic import Field, model_validator
 
 from .common import (Confidence, HumanInLoop, InterventionType, LatencyClass,
                      LayerPlacement, Reversibility, Scale, Strict)
@@ -64,5 +64,16 @@ class StageAnalysis(Strict):
             raise ValueError("intervention 'none' with high suitability is contradictory")
         return self
 
+
+class AnalystOutput(Strict):
+    """What the Analyst returns: exactly one StageAnalysis per stage."""
+    analyses: list[StageAnalysis] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def _unique_stage_ids(self):
+        ids = [a.stage_id for a in self.analyses]
+        if len(set(ids)) != len(ids):
+            raise ValueError("duplicate stage_id in analyses")
+        return self
 
 
